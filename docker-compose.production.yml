@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  web:
+    restart: unless-stopped
+    ports:
+      - 80
+    extra_hosts:
+      - ${DOMAIN}:127.0.0.1
+    networks:
+      - traefiknetwork
+      - default
+    labels:
+      traefik.backend: ${DOMAIN}-web
+      traefik.docker.network: ${TRAEFIK_NETWORK}
+      traefik.frontend.rule: Host:${DOMAIN}
+      traefik.enable: true
+      traefik.port: 80
+  db:
+    restart: always
+    networks:
+      - default
+
+networks:
+  traefiknetwork:
+    external:
+      name: ${TRAEFIK_NETWORK}

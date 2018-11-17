@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+    volumes:
+      - ./data/koken:/var/www/html
+  db:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+    volumes:
+      - ./data/mysql:/var/lib/mysql
